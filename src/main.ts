@@ -1,8 +1,35 @@
 import { NestFactory } from '@nestjs/core';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import { configuration } from './config/configuration';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  const logger = new Logger('StorageService');
+  const config = await configuration();
+  logger.log(config);
+
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.TCP,
+      options: {
+        host: config.app.host,
+        port: config.app.port,
+      },
+    },
+  );
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
+
+  logger.log(
+    `Storage service is running on ${config.app.host}:${config.app.port}`,
+  );
+  await app.listen();
 }
-bootstrap();
+void bootstrap();
