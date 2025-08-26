@@ -3,6 +3,8 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 import { configuration } from './config/configuration';
+import { AllyExceptionInterceptor } from './infrastructure/interceptors/exception.interceptor';
+import { ResponseInterceptor } from './infrastructure/interceptors/response.interceptor';
 
 async function bootstrap() {
   const logger = new Logger('StorageService');
@@ -20,6 +22,12 @@ async function bootstrap() {
     },
   );
 
+  // Configurar interceptores globales
+  app.useGlobalInterceptors(
+    new ResponseInterceptor(),
+    new AllyExceptionInterceptor(),
+  );
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -28,7 +36,7 @@ async function bootstrap() {
   );
 
   logger.log(
-    `Storage service is running on ${config.app.host}:${config.app.port}`,
+    `Storage micro-service is running on ${config.app.host}:${config.app.port}`,
   );
   await app.listen();
 }

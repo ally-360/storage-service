@@ -1,4 +1,5 @@
 import { CONFIG_DEFAULT } from '../config.default';
+import { Storage } from '../../modules/storage/entities/storage.entity';
 
 export const config = {
   app: {
@@ -14,10 +15,10 @@ export const config = {
     /**
      * Puerto HTTP del Gateway
      * @type {number}
-     * @default 3001
-     * @example 3001
+     * @default 3000
+     * @example 3000
      * @description Puerto en el que se ejecutará la aplicación HTTP
-     * @required false
+     * @required true
      */
     port: process.env.PORT ? Number(process.env.PORT) : CONFIG_DEFAULT.app.port,
     /**
@@ -28,28 +29,20 @@ export const config = {
      * @description Determina qué configuración de entorno cargar
      */
     environment: process.env.NODE_ENV || CONFIG_DEFAULT.app.environment,
-  },
-
-  cors: {
     /**
-     * Orígenes permitidos para CORS
-     * @type {string}
-     * @example http://localhost:3000, https://app.example.com
-     * @description Lista separada por comas de orígenes permitidos para CORS
-     * @required false
+     * Habilitar Swagger
+     * @type {boolean}
+     * @default false
+     * @example true, false
+     * @description Habilitar Swagger para la documentación de la API
      */
-    origin: process.env.CORS_ORIGIN?.split(','),
+    enableSwagger:
+      process.env.ENABLE_SWAGGER || CONFIG_DEFAULT.app.enableSwagger,
   },
 
   database: {
-    /**
-     * URL de conexión a la base de datos
-     * @type {string}
-     * @example postgresql://user:password@localhost:5432/database
-     * @description String de conexión a la base de datos
-     * @required false
-     */
-    url: process.env.DATABASE_URL,
+    type: 'postgres',
+    entities: [Storage],
     /**
      * Host de la base de datos
      * @type {string}
@@ -75,7 +68,7 @@ export const config = {
      * @description Nombre de la base de datos
      * @required false
      */
-    name: process.env.DB_NAME,
+    database: process.env.DB_DATABASE,
     /**
      * Usuario de la base de datos
      * @type {string}
@@ -93,11 +86,11 @@ export const config = {
      */
     password: process.env.DB_PASSWORD,
     /**
-     * Nombre de la base de datos
+     * Esquema de la base de datos
      * @type {string}
-     * @example ally360_NN_service
-     * @description Nombre del esquema de base de datos
-     * @required false
+     * @example public, schema1, schema2
+     * @description Esquema de la base de datos
+     * @required true
      */
     schema: process.env.DB_SCHEMA,
   },
@@ -111,28 +104,5 @@ export const config = {
      * @description Nivel de detalle para los logs de la aplicación
      */
     level: process.env.LOG_LEVEL || CONFIG_DEFAULT.logging.level,
-  },
-
-  rateLimit: {
-    /**
-     * Ventana de tiempo para rate limiting en milisegundos
-     * @type {number}
-     * @default 60000
-     * @example 60000, 300000
-     * @description Ventana de tiempo para aplicar límites de tasa de requests
-     */
-    windowMs: process.env.RATE_LIMIT_WINDOW_MS
-      ? Number(process.env.RATE_LIMIT_WINDOW_MS)
-      : CONFIG_DEFAULT.rateLimit.windowMs,
-    /**
-     * Máximo número de requests por ventana de tiempo
-     * @type {number}
-     * @default 200
-     * @example 100, 500
-     * @description Número máximo de requests permitidos por ventana de tiempo
-     */
-    maxRequests: process.env.RATE_LIMIT_MAX_REQUESTS
-      ? Number(process.env.RATE_LIMIT_MAX_REQUESTS)
-      : CONFIG_DEFAULT.rateLimit.maxRequests,
   },
 };

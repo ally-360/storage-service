@@ -9,10 +9,7 @@ const util = {
   isObject<T>(value: T): value is T & Objectype {
     return value !== null && typeof value === 'object' && !Array.isArray(value);
   },
-  merge: <T extends Objectype, U extends Objectype>(
-    target: T,
-    source: U,
-  ): T & U => {
+  merge<T extends Objectype, U extends Objectype>(target: T, source: U): T & U {
     for (const key of Object.keys(source)) {
       const targetValue = target[key];
       const sourceValue = source[key];
@@ -23,7 +20,6 @@ const util = {
         );
       }
     }
-
     return { ...target, ...source };
   },
 };

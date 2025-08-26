@@ -2,7 +2,7 @@ import { MessagePattern } from '@nestjs/microservices';
 import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller('storage')
+@Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 

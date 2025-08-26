@@ -1,6 +1,9 @@
 export const config = {
   database: {
-    synchronize: false,
+    synchronize: true,
     logging: true,
+  },
+  logging: {
+    level: 'debug',
   },
 };
