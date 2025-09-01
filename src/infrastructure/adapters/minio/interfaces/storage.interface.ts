@@ -1,67 +1,9 @@
-export interface MinioConfig {
-  apiEndpoint: string;
-  port: number;
-  useSSL: boolean;
-  accessKey: string;
-  secretKey: string;
-  bucketName: string;
-}
-
-export interface FileMetadata {
-  filename: string;
-  originalName: string;
-  mimetype: string;
-  size: number;
-  bucket: string;
-  key: string;
-  etag?: string;
-  versionId?: string;
-}
-
-export interface UploadResult {
-  success: boolean;
-  bucket: string;
-  key: string;
-  etag: string;
-  versionId?: string;
-  url?: string;
-  metadata: FileMetadata;
-}
-
-export interface DownloadResult {
-  success: boolean;
-  data: Buffer;
-  metadata: FileMetadata;
-  stream?: any;
-}
-
-export interface BucketStats {
-  totalFiles: number;
-  totalSize: number;
-  lastModified: Date;
-}
-
-export interface ListFilesResult {
-  files: FileMetadata[];
-  nextContinuationToken?: string;
-  isTruncated: boolean;
-}
-
-export interface FileVersion {
-  versionId: string;
-  isLatest: boolean;
-  lastModified: Date;
-  size: number;
-  etag: string;
-}
-
-export interface LifecycleRule {
-  id: string;
-  status: 'Enabled' | 'Disabled';
-  filter?: any;
-  transitions?: any[];
-  expiration?: any;
-}
+import { FileMetadata } from '../dtos/file-metadata.dto';
+import { UploadResult } from '../dtos/upload-result.dto';
+import { DownloadResult } from '../dtos/download-result.dto';
+import { BucketStats } from '../dtos/bucket-stats.dto';
+import { ListFilesResult } from '../dtos/list-files-result.dto';
+import { FileVersion } from '../dtos/file-version.dto';
 
 export interface StorageInterface {
   /**

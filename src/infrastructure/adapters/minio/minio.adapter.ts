@@ -1,3 +1,5 @@
+import path from 'path';
+import * as fs from 'fs';
 import {
   Injectable,
   InternalServerErrorException,
@@ -5,8 +7,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Client } from 'minio';
 import {
-  StorageInterface,
   FileMetadata,
   UploadResult,
   DownloadResult,
@@ -14,11 +16,9 @@ import {
   ListFilesResult,
   FileVersion,
   MinioConfig,
-} from './interfaces/storage.interface';
-import { Client } from 'minio';
-import path from 'path';
-import * as fs from 'fs';
+} from './dtos';
 import { getMimeType } from './helpers/get-mimetype.helper';
+import { StorageInterface } from './interfaces/storage.interface';
 
 @Injectable()
 export class MinioAdapter implements StorageInterface {
@@ -178,25 +178,28 @@ export class MinioAdapter implements StorageInterface {
       const chunks: Buffer[] = [];
       return new Promise((resolve, reject) => {
         stream.on('data', (chunk) => chunks.push(chunk));
-        stream.on('end', async () => {
+        stream.on('end', () => {
           try {
             const data = Buffer.concat(chunks);
 
             // Obtener metadatos del archivo
-            const metadata = await this.getFileMetadata(
-              key,
-              targetBucket,
-              versionId,
-            );
+            this.getFileMetadata(key, targetBucket, versionId)
+              .then((metadata) => {
+                const result: DownloadResult = {
+                  success: true,
+                  data,
+                  metadata,
+                  stream,
+                };
 
-            const result: DownloadResult = {
-              success: true,
-              data,
-              metadata,
-              stream,
-            };
-
-            resolve(result);
+                resolve(result);
+              })
+              .catch((error) => {
+                this.logger.error(`Error downloading file: ${error}`);
+                reject(
+                  error instanceof Error ? error : new Error(String(error)),
+                );
+              });
           } catch (error) {
             this.logger.error(`Error downloading file: ${error}`);
             reject(error instanceof Error ? error : new Error(String(error)));
