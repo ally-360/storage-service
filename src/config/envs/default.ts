@@ -48,7 +48,7 @@ export const config = {
      * @type {string}
      * @example localhost, 127.0.0.1
      * @description Host de la base de datos
-     * @required false
+     * @required falses
      */
     host: process.env.DB_HOST,
     /**
@@ -96,18 +96,55 @@ export const config = {
   },
 
   bucket: {
+    /**
+     * Nombre del bucket
+     * @type {string}
+     * @example my-bucket
+     * @description Nombre del bucket
+     * @required true
+     */
     name: process.env.BUCKET_NAME,
-
+    /**
+     * Endpoint de la API
+     * @type {string}
+     * @example http://localhost:9000
+     * @description Endpoint de la API
+     * @required true
+     */
     apiEndpoint: process.env.API_ENDPOINT,
-
+    /**
+     * Puerto de la API
+     * @type {number}
+     * @example 9000
+     * @description Puerto de la API
+     * @required true
+     */
     port: process.env.PORT
       ? Number(process.env.PORT)
       : CONFIG_DEFAULT.storage.port,
-
+    /**
+     * Clave de acceso
+     * @type {string}
+     * @example minioadmin
+     * @description Clave de acceso
+     * @required true
+     */
     accessKey: process.env.ACCESS_KEY,
-
+    /**
+     * Clave de secreto
+     * @type {string}
+     * @example minioadmin
+     * @description Clave de secreto
+     * @required true
+     */
     secretKey: process.env.SECRET_KEY,
-
+    /**
+     * Usar SSL
+     * @type {boolean}
+     * @example true, false
+     * @description Usar SSL
+     * @required true
+     */
     useSSL: process.env.USE_SSL || CONFIG_DEFAULT.storage.useSSL,
   },
 
