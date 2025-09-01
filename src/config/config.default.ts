@@ -45,6 +45,25 @@ export const CONFIG_DEFAULT = {
     ssl: false,
   },
 
+  storage: {
+    /**
+     * @default true
+     */
+    isEnabled: true,
+    /**
+     * @default localhost
+     */
+    apiEndpoint: 'localhost',
+    /**
+     * @default 9001, 9000
+     */
+    port: 9001,
+    /**
+     * @default false
+     */
+    useSSL: false,
+  },
+
   logging: {
     /**
      * @default info

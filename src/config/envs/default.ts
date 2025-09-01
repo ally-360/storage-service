@@ -95,6 +95,22 @@ export const config = {
     schema: process.env.DB_SCHEMA,
   },
 
+  bucket: {
+    name: process.env.BUCKET_NAME,
+
+    apiEndpoint: process.env.API_ENDPOINT,
+
+    port: process.env.PORT
+      ? Number(process.env.PORT)
+      : CONFIG_DEFAULT.storage.port,
+
+    accessKey: process.env.ACCESS_KEY,
+
+    secretKey: process.env.SECRET_KEY,
+
+    useSSL: process.env.USE_SSL || CONFIG_DEFAULT.storage.useSSL,
+  },
+
   logging: {
     /**
      * Nivel de logging de la aplicación
