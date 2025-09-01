@@ -661,7 +661,7 @@ export class MinioAdapter implements StorageInterface {
       const fileStream = fs.createReadStream(filePath);
       const fileStat = fs.statSync(filePath);
 
-      this.storage.putObject(
+      void this.storage.putObject(
         this.bucket,
         minioPath,
         fileStream,
