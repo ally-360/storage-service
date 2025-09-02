@@ -3,10 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StorageService } from './storage.service';
 import { StorageController } from './storage.controller';
 import { Storage } from './entities/storage.entity';
+import { MinioAdapter } from 'src/infrastructure/adapters/minio';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Storage])],
   controllers: [StorageController],
-  providers: [StorageService],
+  providers: [StorageService, MinioAdapter],
 })
 export class StorageModule {}

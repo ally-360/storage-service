@@ -47,10 +47,6 @@ export const CONFIG_DEFAULT = {
 
   storage: {
     /**
-     * @default true
-     */
-    isEnabled: true,
-    /**
      * @default localhost
      */
     apiEndpoint: 'localhost',

@@ -19,6 +19,16 @@ export const JoiValidationSchema = Joi.object({
   DB_PASSWORD: Joi.string().default(CONFIG_DEFAULT.database.password),
   DB_DATABASE: Joi.string().default(CONFIG_DEFAULT.database.database),
 
+  // Configuración de storage (Minio)
+  STORAGE_BUCKET_NAME: Joi.string().required(),
+  STORAGE_API_ENDPOINT: Joi.string().default(
+    CONFIG_DEFAULT.storage.apiEndpoint,
+  ),
+  STORAGE_PORT: Joi.number().port().default(CONFIG_DEFAULT.storage.port),
+  STORAGE_ACCESS_KEY: Joi.string().required(),
+  STORAGE_SECRET_KEY: Joi.string().required(),
+  STORAGE_USE_SSL: Joi.boolean().default(CONFIG_DEFAULT.storage.useSSL),
+
   // Configuración de logging
   LOG_LEVEL: Joi.string()
     .valid(...LOG_LEVELS)

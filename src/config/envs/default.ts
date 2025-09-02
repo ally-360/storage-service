@@ -95,7 +95,7 @@ export const config = {
     schema: process.env.DB_SCHEMA,
   },
 
-  bucket: {
+  storage: {
     /**
      * Nombre del bucket
      * @type {string}
@@ -103,7 +103,7 @@ export const config = {
      * @description Nombre del bucket
      * @required true
      */
-    name: process.env.STORAGE_BUCKET_NAME,
+    bucketName: process.env.STORAGE_BUCKET_NAME,
     /**
      * Endpoint de la API
      * @type {string}
@@ -145,7 +145,7 @@ export const config = {
      * @description Usar SSL
      * @required true
      */
-    useSSL: process.env.STORAGE_USE_SSL || CONFIG_DEFAULT.storage.useSSL,
+    useSSL: process.env.STORAGE_USE_SSL === 'true',
   },
 
   logging: {

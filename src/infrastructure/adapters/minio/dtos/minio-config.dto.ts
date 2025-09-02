@@ -1,4 +1,4 @@
-export interface MinioConfig {
+export class MinioConfig {
   apiEndpoint: string;
   port: number;
   useSSL: boolean;
