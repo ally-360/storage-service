@@ -103,7 +103,7 @@ export const config = {
      * @description Nombre del bucket
      * @required true
      */
-    name: process.env.BUCKET_NAME,
+    name: process.env.STORAGE_BUCKET_NAME,
     /**
      * Endpoint de la API
      * @type {string}
@@ -111,7 +111,7 @@ export const config = {
      * @description Endpoint de la API
      * @required true
      */
-    apiEndpoint: process.env.API_ENDPOINT,
+    apiEndpoint: process.env.STORAGE_API_ENDPOINT,
     /**
      * Puerto de la API
      * @type {number}
@@ -119,8 +119,8 @@ export const config = {
      * @description Puerto de la API
      * @required true
      */
-    port: process.env.PORT
-      ? Number(process.env.PORT)
+    port: process.env.STORAGE_PORT
+      ? Number(process.env.STORAGE_PORT)
       : CONFIG_DEFAULT.storage.port,
     /**
      * Clave de acceso
@@ -129,7 +129,7 @@ export const config = {
      * @description Clave de acceso
      * @required true
      */
-    accessKey: process.env.ACCESS_KEY,
+    accessKey: process.env.STORAGE_ACCESS_KEY,
     /**
      * Clave de secreto
      * @type {string}
@@ -137,7 +137,7 @@ export const config = {
      * @description Clave de secreto
      * @required true
      */
-    secretKey: process.env.SECRET_KEY,
+    secretKey: process.env.STORAGE_SECRET_KEY,
     /**
      * Usar SSL
      * @type {boolean}
@@ -145,7 +145,7 @@ export const config = {
      * @description Usar SSL
      * @required true
      */
-    useSSL: process.env.USE_SSL || CONFIG_DEFAULT.storage.useSSL,
+    useSSL: process.env.STORAGE_USE_SSL || CONFIG_DEFAULT.storage.useSSL,
   },
 
   logging: {
