@@ -55,6 +55,9 @@ export class Storage {
   status: StorageStatus;
 
   @Column({ type: 'varchar', length: 100, nullable: true })
+  tenantId: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
   userId: string;
 
   @Column({ type: 'varchar', length: 100, nullable: true })
@@ -74,6 +77,9 @@ export class Storage {
 
   @Column({ type: 'boolean', default: false })
   isPublic: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  downloadedAt: Date;
 
   @Column({ type: 'timestamp', nullable: true })
   expiresAt: Date;

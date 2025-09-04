@@ -1,7 +1,9 @@
 import { Controller, ParseIntPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { StorageService } from './storage.service';
-import { UploadStorageDto } from './dto/upload.dto';
+import { UploadFileDto } from './dtos/upload-file.dto';
+import { DownloadStorageDto } from './dtos/download.dto';
+import { DeleteStorageDto } from './dtos/delete.dto';
 
 @Controller()
 export class StorageController {
@@ -13,17 +15,17 @@ export class StorageController {
   }
 
   @MessagePattern({ cmd: 'storage_upload' })
-  upload(@Payload() uploadDto: UploadStorageDto) {
-    return this.storageService.upload(uploadDto);
+  upload(@Payload() payload: UploadFileDto) {
+    return this.storageService.upload(payload);
   }
 
   @MessagePattern({ cmd: 'storage_download' })
-  download(@Payload() id: number) {
-    return this.storageService.download(id);
+  download(@Payload() payload: DownloadStorageDto) {
+    return this.storageService.download(payload);
   }
 
   @MessagePattern({ cmd: 'storage_delete' })
-  delete(@Payload() id: number) {
-    return this.storageService.delete(id);
+  delete(@Payload() payload: DeleteStorageDto) {
+    return this.storageService.delete(payload);
   }
 }
