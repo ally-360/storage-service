@@ -1,16 +1,19 @@
-import { Controller, ParseIntPipe } from '@nestjs/common';
+import { Controller, ParseUUIDPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { StorageService } from './storage.service';
-import { UploadFileDto } from './dtos/upload-file.dto';
-import { DownloadStorageDto } from './dtos/download.dto';
-import { DeleteStorageDto } from './dtos/delete.dto';
+import {
+  UploadFileDto,
+  DownloadStorageDto,
+  DeleteStorageDto,
+  PresignedUrlDto,
+} from './dtos';
 
 @Controller()
 export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
   @MessagePattern({ cmd: 'storage_find_one' })
-  findOne(@Payload('id', ParseIntPipe) id: number) {
+  findOne(@Payload('id', ParseUUIDPipe) id: string) {
     return this.storageService.findOne(id);
   }
 
@@ -22,6 +25,11 @@ export class StorageController {
   @MessagePattern({ cmd: 'storage_download' })
   download(@Payload() payload: DownloadStorageDto) {
     return this.storageService.download(payload);
+  }
+
+  @MessagePattern({ cmd: 'storage_presigned_url' })
+  generatePresignedUrl(@Payload() payload: PresignedUrlDto) {
+    return this.storageService.generatePresignedUrl(payload);
   }
 
   @MessagePattern({ cmd: 'storage_delete' })

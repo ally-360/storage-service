@@ -4,7 +4,7 @@ import { RpcException } from '@nestjs/microservices';
 import { Repository } from 'typeorm';
 import { MinioAdapter } from 'src/infrastructure/adapters/minio';
 import { Storage, StorageAction } from '../entities/storage.entity';
-import { PresignedUrlDto } from '../dtos/presigned-url.dto';
+import { PresignedUrlDto } from '../dtos';
 
 export class PresignedUrlFileUseCase {
   private readonly logger = new Logger(PresignedUrlFileUseCase.name);
@@ -17,12 +17,13 @@ export class PresignedUrlFileUseCase {
 
   async execute(presignedUrlDto: PresignedUrlDto) {
     const { id, expiresIn = 10800, operation = 'GET' } = presignedUrlDto;
+    const { bucket, tenantId } = presignedUrlDto.originInfo;
 
     this.logger.log(`Generating presigned URL for storage ID: ${id}`);
 
     // Buscar el archivo en la base de datos
     const storageRecord = await this.storageRepository.findOne({
-      where: { id }, // TODO: Pendiente revisar ya que tambien se debe tener en cuenta el tenantId - filename
+      where: { id, bucket, tenantId }, // TODO: Pendiente revisar ya que tambien se debe tener en cuenta el tenantId - filename
     });
 
     if (!storageRecord) {
@@ -44,7 +45,7 @@ export class PresignedUrlFileUseCase {
       storageRecord.key,
       operation,
       expiresIn,
-      storageRecord.bucket,
+      storageRecord.bucket || bucket,
     );
 
     await this.storageRepository.update(id, {

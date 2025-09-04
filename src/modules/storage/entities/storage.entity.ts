@@ -24,8 +24,8 @@ export enum StorageStatus {
 
 @Entity('storage')
 export class Storage {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   filename: string;

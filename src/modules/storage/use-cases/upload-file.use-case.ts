@@ -7,7 +7,7 @@ import {
   StorageAction,
   StorageStatus,
 } from '../entities/storage.entity';
-import { UploadFileDto } from '../dtos/upload-file.dto';
+import { UploadFileDto } from '../dtos';
 
 export class UploadFileUseCase {
   private readonly logger = new Logger(UploadFileUseCase.name);

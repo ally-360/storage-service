@@ -4,7 +4,7 @@ import { RpcException } from '@nestjs/microservices';
 import { Repository } from 'typeorm';
 import { MinioAdapter } from 'src/infrastructure/adapters/minio';
 import { Storage, StorageAction } from '../entities/storage.entity';
-import { DownloadStorageDto } from '../dtos/download.dto';
+import { DownloadStorageDto } from '../dtos';
 
 export class DownloadFileUseCase {
   private readonly logger = new Logger(DownloadFileUseCase.name);

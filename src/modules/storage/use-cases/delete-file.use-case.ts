@@ -8,7 +8,7 @@ import {
   StorageAction,
   StorageStatus,
 } from '../entities/storage.entity';
-import { DeleteStorageDto } from '../dtos/delete.dto';
+import { DeleteStorageDto } from '../dtos';
 
 export class DeleteFileUseCase {
   private readonly logger = new Logger(DeleteFileUseCase.name);
